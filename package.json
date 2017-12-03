@@ -1,0 +1,25 @@
+{
+  "name": "ng-contacts",
+  "version": "1.0.0",
+  "description": "mean app",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "keywords": [
+    "mean",
+    "crud",
+    "crud",
+    "operations"
+  ],
+  "author": "Bruno G. Tavares",
+  "license": "ISC",
+  "dependencies": {
+    "angular": "^1.6.7",
+    "angular-ui-router": "^0.4.3",
+    "bootstrap": "^3.3.7",
+    "express": "^4.16.2",
+    "mongoose": "^4.13.6"
+  }
+}
