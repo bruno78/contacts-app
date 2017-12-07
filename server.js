@@ -1,36 +1,58 @@
-var express = require('express'),
-path = require('path'),
-bodyParser = require('body-parser'),
-routes = require('./server/routes/web'), //web routes
-apiRoutes = require('./server/routes/api'), //api routes
-connection = require("./server/config/db"); //mongodb connection
-
-// creating express server
+var express = require('express');
 var app = express();
+var mongojs = require('mongojs');
+var db = mongojs('contactlist', ['contactlist']);
+var bodyParser = require('body-parser');
 
-//========= configuration ==========
-
-//===== get all the data from the body (POST)
-
-// parse application/json 
+app.use(express.static(__dirname + "/public"));
 app.use(bodyParser.json());
 
-// parse application/x-www-form-urlencoded
-app.use(bodyParser.urlencoded({ extended: false }));
+app.get('/contactlist', function(req, res) {
+    console.log("I received a get request");
 
-// setting static files location './app' for angular app html and js
-app.use(express.static(path.join(__dirname, 'app')));
-// setting static files location './node_modules' for libs like angular, bootstrap
-app.use(express.static('node_modules'));
+    db.contactlist.find(function(err, docs) {
+        console.log(docs);
+        res.json(docs);
+    })
 
-// configure our routes
-app.use('/', routes);
-app.use('/api', apiRoutes);
+})
 
-// setting port number for running server
-var port = process.env.port || 3000;
+app.post('/contactlist', function(req, res) {
+    console.log(req.body);
 
-// starting express server
-app.listen(port, function() {
-console.log("Server is running at : http://localhost:" + port);
-});
+    db.contactlist.insert(req.body, function(err, doc){
+        res.json(doc);
+    });
+})
+
+app.delete('/contactlist/:id', function(req, res) {
+    var id = req.params.id;
+    console.log(id);
+    db.contactlist.remove({_id: mongojs.ObjectId(id)}, function(err, doc) {
+        res.json(doc);
+    })
+})
+
+app.get('/contactlist/:id', function(req, res) {
+    var id = req.params.id;
+
+    db.contactlist.findOne({_id: mongojs.ObjectId(id)}, function(err, doc) {
+        res.json(doc);
+    })
+})
+
+app.put('/contactlist/:id', function(req, res) {
+    var id = req.params.id;
+    console.log(req.body.name);
+    db.contactlist.findAndModify({ query: {_id: mongojs.ObjectId(id)},
+        update: {$set: {name: req.body.name, email: req.body.email, number: req.body.number }},
+        new: true}, function(err, doc) {
+            res.json(doc);
+        }
+    )
+})
+
+
+app.listen(3000);
+
+console.log("Server running at port 3000");

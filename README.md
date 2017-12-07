@@ -1,41 +1,15 @@
-# ng-Contacts a contact app
+## Contacts list App 
 
-Contacts application built in MEAN stack (AngularJS 1.x)
+_A contacts list application built on MEAN stack_
 
-## Backend - Node, Express, and MongoDB 
+### server and routers 
 
-### Server 
+server.js 
 
-``` server.js ```
+### controller 
 
-### MongoDB Configuration 
+controller.js
 
-Defines MongoDB configuration settings to make connection with MongoDB databse 
+### frontend 
 
-``` server/config/db.js ```
-
-### Mongoose Model 
-
-Defines MongoDB user document mappings with help of Mongoose model. The Mongoose model handles CRUD operations on user account. 
-
-``` server/models/user.js ```
-
-### Creating User API Controller 
-
-Performs CRUD operations on MongoDB's user document. 
-
-``` server/controllers/user.api.js ```
-
-### Routes Configuration 
-
-Configures routes for REST API and web (Angular App)
-
-``` server/routes/api.js ```
-
-and web
-
-``` server/routes/web.js ```
-
---- _**(end of backend)**_ ---
-
-http://www.dotnettricks.com/learn/nodejs/creating-a-mean-stack-spa-with-crud-operations
+index.html 
